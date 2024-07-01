@@ -81,13 +81,13 @@ ol li {
   margin-right: 5px;
 }
 
-#Module-bar {
+.Module-bar {
   padding: 1vh;
 	margin-left: 25vw;
 	margin-right: 25vw;
 	text-align: center;
 }
-#Module-bar:hover{
+.Module-bar:hover{
 	box-shadow: 1vh 1vw 15vh 0.5vh #9ba6b0;
 	transform: scale(1.005);
 }

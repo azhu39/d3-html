@@ -27,7 +27,7 @@
         <video id="localVideo" autoplay muted></video>
         <video id="remoteVideo" autoplay muted style="width: 480px"></video>
       </div>
-      <h2 type="button" onclick="toggle('Pre')" id="Module-bar">
+      <h2 type="button" onclick="toggle('Pre')" class="Module-bar">
           Pre-operation Check
       </h2>
       <ol id="Pre">
@@ -81,12 +81,16 @@
           >.
         </li>
       </ol>
-      <h2>
+      <h2 type="button" onclick="toggle('Dashboard')" class="Module-bar">
         Dashboard
       </h2>
-      <div>
+      <div id="Dashboard">
         <input type="button" value="Call" onclick="startCall()" />
         <input type="button" value="Hang Up" onclick="endCall()" />
+        <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
+        <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
+        <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
+        <input type="button" value="Enable Navigation" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
       </div>
       <hr />
       <div id="logs"></div>
