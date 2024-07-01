@@ -44,14 +44,7 @@ function connectWebsocket() {
   };
 }
 
-function toggle(viewID) {
-    var element = document.getElementById(viewID);
-    if (element.style.display === "none") {
-        element.style.display = "block";
-    } else {
-        element.style.display = "none";
-    }
-}
+
 
 window.sendToServer = (message) => {
   socket.send(JSON.stringify(message));
