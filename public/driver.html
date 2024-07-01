@@ -86,18 +86,9 @@
 }</textarea>
         </li>
         <li>
-          Optional: Add robot controls, such as Pole
-          <a href="javascript:sendToServer({ type: 'poleStand' })">stand</a> |
-          <a href="javascript:sendToServer({ type: 'poleSit' })">sit</a> |
-          <a href="javascript:sendToServer({ type: 'poleStop' })">stop</a>
-          or
-          <a href="javascript:sendToServer({ type: 'enableNavigation' })"
-            >enable navigation</a
-          >
-          and
           <a
             href="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })"
-            >drive forward 1 meter</a
+            >Drive forward 1 meter</a
           >.
         </li>
       </ol>
@@ -111,8 +102,8 @@
         <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
         <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
         <input type="button" value="Enable Navigation" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
-        <input type="button" value="Deploy Kickstand" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
-        <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
+        <input type="button" value="Deploy Kickstand" onclick="javascript:sendToServer({ type: 'deployKickstand' })" />
+        <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
       </div>
       <hr />
       <div id="logs"></div>

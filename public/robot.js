@@ -73,6 +73,14 @@ function connectWebsocket() {
         case "enableNavigation":
           DRDoubleSDK.sendCommand("navigate.enable");
           break;
+        
+        case "deployKickstand":
+          DRDoubleSDK.sendCommand("base.kickstand.deploy");
+          break;
+        
+        case "retractKickstand":
+          DRDoubleSDK.sendCommand("base.kickstand.retract");
+          break;
 
         case "relativeTarget":
           if (signal.hasOwnProperty("x") && signal.hasOwnProperty("y")) {
