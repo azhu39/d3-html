@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Double 3 WebRTC: Driver</title>
+    <title>D3 WebRTC: Driver</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A cool thing made with Glitch" />
@@ -19,10 +19,7 @@
   </head>
   <body>
     <header>
-      <h1>D3 WebRTC: Driver Page</h1>
-      <p>
-        This is a full-stack project that supports online communication and control to a Double 3 telerobot.
-      </p>
+      <h1>D3 WebRTC: Driver's Page</h1>
     </header>
 
     <main>
@@ -31,6 +28,9 @@
         <video id="remoteVideo" autoplay muted style="width: 480px"></video>
       </div>
       <ol>
+        <h2>
+          Pre-operation Check
+        </h2>
         <li>
           First, please load custom robot Standby GUI from the Developer Monitor (http://<span
             style="color: #929292"
@@ -58,8 +58,8 @@
           &nbsp;<span id="robotAvailability"></span>
         </li>
 
-        <li class="optional">
-          Optional:
+        <li>
+          Then, please check the webcam and microphone authorization on your computer:
           <input type="button" value="List Webcams" onclick="listWebcams()" />
           <select id="cameras" onchange="updateLocalVideo()"></select>
           <select id="mics" onchange="updateLocalVideo()"></select>
