@@ -19,13 +19,9 @@
   </head>
   <body>
     <header>
-      <h1>D3 WebRTC Example: Driver Page</h1>
+      <h1>D3 WebRTC: Driver Page</h1>
       <p>
-        This example shows how to orchestrate a WebRTC call on
-        <a href="https://www.doublerobotics.com" target="_blank">Double 3</a>
-        using a custom standby screen and the native WebRTC implementation that
-        takes advantage of the hardware h264 encoder. Your robot must be in
-        developer mode.
+        This is a full-stack project that supports online communication and control to a Double 3 telerobot.
       </p>
     </header>
 
@@ -36,24 +32,7 @@
       </div>
       <ol>
         <li>
-          <input
-            type="button"
-            onclick="window.location='https://glitch.com/edit/#!/remix/d3-webrtc-example';"
-            value="Remix this on Glitch"
-          />, so you create your own app. Loading the shared version (<a
-            href="https://d3-webrtc-example.glitch.me"
-            >d3-webrtc-example.glitch.me</a
-          >) onto your robot will expose your robot to anyone else who loads
-          this page!
-        </li>
-
-        <li>
-          In the Glitch editor top bar, click Show &gt; In a New Window to open
-          this driver page on your computer.
-        </li>
-
-        <li>
-          Load custom robot Standby GUI from the Developer Monitor (http://<span
+          First, please load custom robot Standby GUI from the Developer Monitor (http://<span
             style="color: #929292"
             >ROBOT_LOCAL_IP</span
           >:8080/ &gt; Dashboard &gt; Standby GUI &gt; GO):<br />
@@ -69,8 +48,8 @@
           />
         </li>
 
-        <li class="optional">
-          Optional:
+        <li>
+          Then, please check whether a robot is connected to you:
           <input
             type="button"
             value="Check for Robot"
