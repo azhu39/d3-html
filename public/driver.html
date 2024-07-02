@@ -96,15 +96,21 @@
         Dashboard
       </h2>
       <div id="Dashboard">
-        <input type="button" value="Call" onclick="startCall()" />
-        <input type="button" value="Hang Up" onclick="endCall()" />
-        <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
-        <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
-        <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
-        <input type="button" value="Enable Navigation" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
-        <input type="button" value="Deploy Kickstand" onclick="javascript:sendToServer({ type: 'deployKickstand' })" />
-        <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
-        <input type="button" value="Drive forward" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })" />
+        <div>
+          <input type="button" value="Call" onclick="startCall()" />
+          <input type="button" value="Hang Up" onclick="endCall()" />
+          <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
+          <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
+          <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
+          <input type="button" value="Enable Navigation" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
+          <input type="button" value="Deploy Kickstand" onclick="javascript:sendToServer({ type: 'deployKickstand' })" />
+          <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
+          <input type="button" value="Drive forward" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })" />
+        </div>
+        <div>
+          <input type="button" value="⬅" />
+        </div>
+        
       </div>
       <hr />
       <div id="logs"></div>
