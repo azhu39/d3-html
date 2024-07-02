@@ -141,18 +141,18 @@
               const throttle = parseFloat(button.getAttribute("data-throttle"));
               const turn = parseFloat(button.getAttribute("data-turn"));
               intervalId = setInterval(() => {
-                  javascript:sendToServer({ throttle, turn, powerDrive: false, disableTurn: false });
+                  sendToServer({ throttle, turn, powerDrive: false, disableTurn: false });
               }, 200);
           });
 
           button.addEventListener("mouseup", () => {
               clearInterval(intervalId);
-              sendDriveCommand({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the button is released
+              sendToServer({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the button is released
           });
 
           button.addEventListener("mouseleave", () => {
               clearInterval(intervalId);
-              sendDriveCommand({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the cursor leaves the button
+              sendToServer({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the cursor leaves the button
           });
       });
     </script>
