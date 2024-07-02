@@ -138,26 +138,23 @@
 
       buttons.forEach(button => {
           button.addEventListener("mousedown", () => {
-              const command = button.getAttribute("data-command");
+              const throttle = parseFloat(button.getAttribute("data-throttle"));
+              const turn = parseFloat(button.getAttribute("data-turn"));
               intervalId = setInterval(() => {
-                  communicateWithServer(command);
-              }, 200); // Adjust the interval as needed
+                  javascript:sendToServer({ throttle, turn, powerDrive: false, disableTurn: false });
+              }, 200);
           });
 
           button.addEventListener("mouseup", () => {
               clearInterval(intervalId);
+              sendDriveCommand({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the button is released
           });
 
           button.addEventListener("mouseleave", () => {
               clearInterval(intervalId);
+              sendDriveCommand({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the cursor leaves the button
           });
       });
-
-      function communicateWithServer(command) {
-          javascript:sendToServer(command)
-          }
-      });
-
     </script>
   </body>
 </html>
