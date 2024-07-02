@@ -85,12 +85,6 @@
   ]
 }</textarea>
         </li>
-        <li>
-          <a
-            href="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })"
-            >Drive forward 1 meter</a
-          >.
-        </li>
       </ol>
       <h2 type="button" onclick="toggle('Dashboard')" class="Module-bar">
         Dashboard
@@ -108,9 +102,11 @@
           <input type="button" value="Drive forward" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })" />
         </div>
         <div>
-          <input type="button" value="⬅" />
+          <input type="button" value="⬅" class="control-button" data-command="L" />
+          <input type="button" value="⬆" class="control-button" data-command="F" />
+          <input type="button" value="⬇" class="control-button" data-command="B" />
+          <input type="button" value="➡" class="control-button" data-command="R" />
         </div>
-        
       </div>
       <hr />
       <div id="logs"></div>
@@ -134,6 +130,46 @@
                     element.style.display = "none";
                 }
             }
+      
+      document.addEventListener("DOMContentLoaded", () => {
+      const buttons = document.querySelectorAll(".control-button");
+      let intervalId;
+
+      buttons.forEach(button => {
+          button.addEventListener("mousedown", () => {
+              const command = button.getAttribute("data-command");
+              intervalId = setInterval(() => {
+                  communicateWithServer(command);
+              }, 200); // Adjust the interval as needed
+          });
+
+          button.addEventListener("mouseup", () => {
+              clearInterval(intervalId);
+          });
+
+          button.addEventListener("mouseleave", () => {
+              clearInterval(intervalId);
+          });
+      });
+
+      function communicateWithServer(command) {
+          fetch('https://your-backend-server.com/api', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ command: command }),
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log('Success:', data);
+          })
+          .catch((error) => {
+              console.error('Error:', error);
+            });
+          }
+      });
+
     </script>
   </body>
 </html>
