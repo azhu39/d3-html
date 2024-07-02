@@ -138,21 +138,21 @@
 
       buttons.forEach(button => {
           button.addEventListener("mousedown", () => {
-              const throttle = parseFloat(button.getAttribute("data-throttle"));
-              const turn = parseFloat(button.getAttribute("data-turn"));
+              const getThrottle = parseFloat(button.getAttribute("data-throttle"));
+              const getTurn = parseFloat(button.getAttribute("data-turn"));
               intervalId = setInterval(() => {
-                  sendToServer({ throttle, turn, powerDrive: false, disableTurn: false });
+                  sendToServer({ type: 'navigate', throttle: getThrottle, turn: getTurn });
               }, 200);
           });
 
           button.addEventListener("mouseup", () => {
               clearInterval(intervalId);
-              sendToServer({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the button is released
+              sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the button is released
           });
 
           button.addEventListener("mouseleave", () => {
               clearInterval(intervalId);
-              sendToServer({ throttle: 0, turn: 0, powerDrive: false, disableTurn: false }); // Stop the robot when the cursor leaves the button
+              sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the cursor leaves the button
           });
       });
     </script>
