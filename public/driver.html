@@ -102,10 +102,11 @@
           <input type="button" value="Drive forward" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })" />
         </div>
         <div>
-          <input type="button" value="⬅" class="control-button" data-command="L" />
-          <input type="button" value="⬆" class="control-button" data-command="F" />
-          <input type="button" value="⬇" class="control-button" data-command="B" />
-          <input type="button" value="➡" class="control-button" data-command="R" />
+          <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-1" />
+          <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" />
+          <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" />
+          <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="1" />
+
         </div>
       </div>
       <hr />
@@ -153,20 +154,7 @@
       });
 
       function communicateWithServer(command) {
-          fetch('https://your-backend-server.com/api', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ command: command }),
-          })
-          .then(response => response.json())
-          .then(data => {
-              console.log('Success:', data);
-          })
-          .catch((error) => {
-              console.error('Error:', error);
-            });
+          javascript:sendToServer(command)
           }
       });
 
