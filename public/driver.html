@@ -145,7 +145,7 @@
               const getThrottle = parseFloat(button.getAttribute("data-throttle"));
               const getTurn = parseFloat(button.getAttribute("data-turn"));
               intervalId = setInterval(() => {
-                  sendToServer({ type: 'navigate', throttle: getThrottle, turn: getTurn });
+                  sendToServer({ type: 'navigateDrive', throttle: getThrottle, turn: getTurn });
               }, 200);
           });
 
