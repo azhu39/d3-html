@@ -175,7 +175,7 @@
         clickAndDriveEnabled = false;
       }
 
-      var remoteVideoElement = document.getElementById('remoteVideoElement');
+      var remoteVideoElement = document.getElementById('remoteVideoOverlay');
 
       remoteVideoElement.addEventListener('click', function(event) {
           var rect = remoteVideoElement.getBoundingClientRect();
@@ -184,6 +184,7 @@
           if(clickAndDriveEnabled)
             {
               event.preventDefault(); 
+              console.log(`Click coordinates: x=${getX}, y=${getY}`);
               sendToServer({ type: 'click2Drive', x: getX, y: getY });
             }
       });
