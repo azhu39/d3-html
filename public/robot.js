@@ -96,7 +96,7 @@ function connectWebsocket() {
         
         case "click2Drive":
           if (signal.hasOwnProperty("x") && signal.hasOwnProperty("y")) {
-            DRDoubleSDK.sendCommand("navigate.target", { relative: true, x: signal.x, y: signal.y });
+            DRDoubleSDK.sendCommand("camera.hitTest", { x: signal.x, y: signal.y, highlight: true, passToNavigate: true });
           }
           break;
         
