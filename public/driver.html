@@ -91,7 +91,7 @@
     }
   ]
 }</textarea>
-          <a href="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })">drive forward 1 meter</a>.
+          
         </li>
       </ol>
       <h2 type="button" onclick="toggle('Dashboard')" class="Module-bar">
@@ -107,16 +107,12 @@
           <input type="button" value="Enable Navigation" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
           <input type="button" value="Deploy Kickstand" onclick="javascript:sendToServer({ type: 'deployKickstand' })" />
           <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
-          <input type="button" value="Drive forward" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 1, y: 0 })" />
-          <input type="button" value="Drive Backward" onclick="javascript:sendToServer({ type: 'relativeTarget', x: -1, y: 0 })" />
-          <input type="button" value="Left" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 0, y: 1 })" />
-          <input type="button" value="Right" onclick="javascript:sendToServer({ type: 'relativeTarget', x: 0, y: -1 })" />
         </div>
         <div>
-          <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-1" />
+          <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" />
           <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" />
           <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" />
-          <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="1" />
+          <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
 
         </div>
       </div>
