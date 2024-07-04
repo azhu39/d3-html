@@ -105,19 +105,23 @@ footer {
   border-top: 1px solid lightgrey;
 }
 
-.streams div {
-/*   display: flex; */
-  justify-content: start;
+#streams div {
+  display: flex;
+  justify-content: center;  
   margin-bottom: 20px;
 }
 
-.streams video {
+#Pre {
+  text-align: center;
+}
+
+/* .streams video {
   background: #EEEEEE;
   display: block;
   height: 300px;
   margin-right: 15px;
   width: 480px;
-}
+} */
 
 #logs div {
   font-family: monospace;
@@ -126,16 +130,24 @@ footer {
 
 #remoteVideoContainer {
     position: relative;
-    width: 400px;
+    width: 480px;
     height: 300px;
 }
-/* #remoteVideo {
+
+#localVideo {
+  background: #EEEEEE;
+  display: block;
+  height: 300px;
+  margin-right: 15px;
+  width: 400px;
+}
+#remoteVideo {
     width: 100%;
     height: 100%;
     display: block;
     background: #EEEEEE;
     margin-right: 15px;
-} */
+}
 #remoteVideoOverlay {
     position: absolute;
     top: 0;

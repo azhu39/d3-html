@@ -23,14 +23,17 @@
     </header>
 
     <main>
-      <div class="streams">
+      <div id="streams">
         <div>
-          <video id="localVideo" autoplay muted></video>
+          <div>
+            <video id="localVideo" autoplay muted></video>
+          </div>
+          <div id="remoteVideoContainer">   
+            <video id="remoteVideo" autoplay muted></video>
+            <div id="remoteVideoOverlay"/>
+          </div>
         </div>
-        <div id="remoteVideoContainer">   
-          <video id="remoteVideo" autoplay muted></video>
-          <div id="remoteVideoOverlay"/>
-        </div> 
+         
 <!--         <video id="remoteVideo" autoplay muted></video> -->
       </div>
       <h2 type="button" onclick="toggle('Pre')" class="Module-bar">
@@ -181,7 +184,7 @@
           var rect = remoteVideoElement.getBoundingClientRect();
           var getX = (event.clientX - rect.left) / rect.width;
           var getY = (event.clientY - rect.top) / rect.height;
-          if(clickAndDriveEnabled)
+          if(clickAndDriveEnabled===true)
             {
               event.preventDefault(); 
               console.log(`Click coordinates: x=${getX}, y=${getY}`);
