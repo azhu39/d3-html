@@ -123,3 +123,24 @@ footer {
   font-family: monospace;
   white-space: pre;
 }
+
+#remoteVideoContainer {
+    position: relative;
+    width: 640px;
+    height: 480px;
+}
+#remoteVideo {
+/*     width: 100%;
+    height: 100%; */
+  width: 480px;
+    
+}
+#remoteVideoOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 1;
+}
