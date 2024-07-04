@@ -107,21 +107,9 @@ footer {
 
 #streams div {
   display: flex;
-  justify-content: center;  
+  justify-content: start;  
   margin-bottom: 20px;
 }
-
-#Pre {
-  text-align: center;
-}
-
-/* .streams video {
-  background: #EEEEEE;
-  display: block;
-  height: 300px;
-  margin-right: 15px;
-  width: 480px;
-} */
 
 #logs div {
   font-family: monospace;
@@ -155,5 +143,5 @@ footer {
     width: 100%;
     height: 100%;
     background: transparent;
-    z-index: 1;
+    z-index: 10;
 }

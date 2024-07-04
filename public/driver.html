@@ -30,11 +30,9 @@
           </div>
           <div id="remoteVideoContainer">   
             <video id="remoteVideo" autoplay muted></video>
-            <div id="remoteVideoOverlay"/>
+            <div id="remoteVideoOverlay"></div>
           </div>
         </div>
-         
-<!--         <video id="remoteVideo" autoplay muted></video> -->
       </div>
       <h2 type="button" onclick="toggle('Pre')" class="Module-bar">
           Pre-operation Check
@@ -178,10 +176,10 @@
         clickAndDriveEnabled = false;
       }
 
-      var remoteVideoElement = document.getElementById('remoteVideoOverlay');
+      var remoteVideoOverlay = document.getElementById('remoteVideoOverlay');
 
-      remoteVideoElement.addEventListener('click', function(event) {
-          var rect = remoteVideoElement.getBoundingClientRect();
+      remoteVideoOverlay.addEventListener('click', function(event) {
+          var rect = remoteVideoOverlay.getBoundingClientRect();
           var getX = (event.clientX - rect.left) / rect.width;
           var getY = (event.clientY - rect.top) / rect.height;
           if(clickAndDriveEnabled===true)
