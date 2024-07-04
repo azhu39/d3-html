@@ -41,6 +41,7 @@ function connectWebsocket() {
           
         case "startCall":
           log("startCall");
+          DRDoubleSDK.sendCommand("camera.enable", { template: "h264ForWebRTC" });
           DRDoubleSDK.sendCommand("webrtc.enable", {
             servers: signal.servers,
             transportPolicy: signal.transportPolicy || "all",
