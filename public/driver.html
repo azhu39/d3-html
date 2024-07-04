@@ -92,8 +92,8 @@
       </h2>
       <div id="Dashboard">
         <div>
-          <input type="button" value="Call" onclick="startCall()" />
-          <input type="button" value="Hang Up" onclick="endCall()" />
+          <input type="button" value="Call" onclick="startCall();enableCND();" />
+          <input type="button" value="Hang Up" onclick="endCall();disableCND();" />
           <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
           <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
           <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
@@ -161,7 +161,25 @@
         });
       });
       
-      
+      var clickAndDriveEnabled = false;
+      function enableCND() {
+        clickAndDriveEnabled = true;
+      }
+      function disableCND() {
+        clickAndDriveEnabled = false;
+      }
+
+      var videoElement = document.getElementById('videoElement');
+
+      videoElement.addEventListener('click', function(event) {
+          // Get the click position
+          var rect = videoElement.getBoundingClientRect();
+          var x = (event.clientX - rect.left) / rect.width;
+          var y = (event.clientY - rect.top) / rect.height;
+
+          // Call the hitTest function
+          hitTest(x, y);
+      });
     </script>
   </body>
 </html>
