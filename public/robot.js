@@ -149,7 +149,7 @@ DRDoubleSDK.on("event", (message) => {
       sendToServer(message.data);
       break;
     case "DRCamera.hitResult":
-      sendToServer({ type: 'navigate.hitResult', x: message.data.x, y: message.data.y, z: message.data.z, hit: true });
+      DRDoubleSDK.sendCommand( "navigate.hitResult", {x: message.data.x, y: message.data.y, z: message.data.z, hit: true });
       break;
   }
 });
