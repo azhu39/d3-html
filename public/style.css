@@ -105,18 +105,18 @@ footer {
   border-top: 1px solid lightgrey;
 }
 
-/* .streams {
-  display: flex;
+.streams div {
+/*   display: flex; */
   justify-content: start;
   margin-bottom: 20px;
-} */
+}
 
 .streams video {
   background: #EEEEEE;
   display: block;
   height: 300px;
   margin-right: 15px;
-  width: 400px;
+  width: 480px;
 }
 
 #logs div {
@@ -126,7 +126,7 @@ footer {
 
 #remoteVideoContainer {
     position: relative;
-    width: 480px;
+    width: 400px;
     height: 300px;
 }
 /* #remoteVideo {
