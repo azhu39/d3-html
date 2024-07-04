@@ -87,11 +87,19 @@ function connectWebsocket() {
             DRDoubleSDK.sendCommand("navigate.target", { relative: true, x: signal.x, y: signal.y });
           }
           break;
+        
         case "navigateDrive":
           if (signal.hasOwnProperty("throttle") && signal.hasOwnProperty("turn")) {
             DRDoubleSDK.sendCommand("navigate.drive", { throttle: signal.throttle, turn: signal.turn });
           }
           break;
+        
+        case "click2Drive":
+          if (signal.hasOwnProperty("x") && signal.hasOwnProperty("y")) {
+            DRDoubleSDK.sendCommand("navigate.target", { relative: true, x: signal.x, y: signal.y });
+          }
+          break;
+        
       }
     }
   };
