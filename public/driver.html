@@ -32,6 +32,9 @@
             <video id="remoteVideo" autoplay muted></video>
             <div id="remoteVideoOverlay"></div>
           </div>
+          <div id="remoteDriverContainer">
+            
+          </div>
         </div>
       </div>
       <h2 type="button" onclick="toggle('Pre')" class="Module-bar">
@@ -99,8 +102,13 @@
       </h2>
       <div id="Dashboard">
         <div>
-          <input type="button" value="Call" onclick="startCall();enableCND();" />
-          <input type="button" value="Hang Up" onclick="endCall();disableCND();" />
+          <input type="button" value="Call Robot" onclick="startCall();enableCND();" />
+          <input type="button" value="Hang Up Robot" onclick="endCall();disableCND();" />
+          <p>
+            My ID is:
+            <textarea>88888</textarea>
+            Now you can copy your ID to others
+          </p>
           <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
           <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
           <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
