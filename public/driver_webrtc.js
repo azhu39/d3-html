@@ -5,6 +5,7 @@ export function DriverWebRTC(iceConfig, log, sendToServer, hangUpCall) {
   var pc = null;
   var localVideo = document.getElementById("localVideo");
   var remoteVideo = document.getElementById("remoteVideo");
+  var remoteDriver = document.getElementById("remoteDriver");
   
   this.handleVideoOffer = async (msg) => {
     log("Received call offer");
