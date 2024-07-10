@@ -148,9 +148,6 @@ DRDoubleSDK.on("event", (message) => {
     case "DRWebRTC.signal":
       sendToServer(message.data);
       break;
-    // case "DRCamera.hitResult":
-    //   DRDoubleSDK.sendCommand( "navigate.hitResult", {x: message.data.x, y: message.data.y, z: message.data.z, hit: true });
-    //   break;
   }
 });
 
