@@ -68,6 +68,8 @@ var cameras = document.getElementById("cameras");
 var mics = document.getElementById("mics");
 var localVideo = document.getElementById("localVideo");
 var urlBox = document.getElementById("urlBox");
+var user1Url = document.getElementById("user1Url");
+var user2Url = document.getElementById("user2Url");
 var robotAvailabilityBox = document.getElementById("robotAvailability");
 var iceConfigTextarea = document.getElementById("iceConfig");
 
@@ -75,6 +77,9 @@ if (window.location.host == "d3-webrtc-example.glitch.me") {
   urlBox.value = "Do step 1 first!";
 } else {
   urlBox.value = "https://"+ window.location.host +"/robot";
+  user1Url.value = "https://"+ window.location.host +"/user1";
+  user2Url.value = "https://"+ window.location.host +"/user2";
+  
 }
 
 window.listWebcams = () => {

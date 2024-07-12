@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User 2 Control Panel</title>
+    <style>
+        #controlStatus {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #controlPanel {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>User 2 Control Panel</h1>
+    <div id="controlStatus">Waiting for control...</div>
+    <div id="controlPanel">
+        <div>
+            <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" />
+            <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" />
+            <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" />
+            <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
+        </div>
+    </div>
+    <div id="remoteVideoContainer">   
+        <video id="remoteVideo" autoplay muted></video>
+    </div>
+    <script src="user2.js"></script>
+</body>
+</html>
