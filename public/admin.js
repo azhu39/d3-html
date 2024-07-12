@@ -47,7 +47,7 @@ function connectWebsocket() {
           document.getElementById(`toggle${signal.user.charAt(0).toUpperCase() + signal.user.slice(1)}`).textContent = 'Enable';
           break;
         case 'controlStatus':
-          document.getElementById(`toggle${signal.user.charAt(0).toUpperCase() + signal.user.slice(1)}`).textContent = signal.hasControl ? 'Disable' : 'Enable';
+          document.getElementById(`toggle${signal.user.charAt(0).toUpperCase() + signal.user.slice(1)}`).value = signal.hasControl ? 'Disable' : 'Enable';
           break;
       }
     }
