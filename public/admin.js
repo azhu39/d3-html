@@ -1,4 +1,4 @@
-import { DriverWebRTC } from './driver_webrtc.js';
+import { AdminWebRTC } from './admin_webrtc.js';
 
 var webrtc = null;
 var iceConfig = null;
@@ -139,7 +139,7 @@ window.startCall = () => {
   }
   iceConfig.sdpSemantics = "unified-plan";
   
-  webrtc = new DriverWebRTC(iceConfig, log, window.sendToServer, window.endCall);
+  webrtc = new AdminWebRTC(iceConfig, log, window.sendToServer, window.endCall);
   window.sendToServer({
     type: "startCall",
     servers: iceConfig.iceServers,

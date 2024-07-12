@@ -1,6 +1,6 @@
 // WebRTC
 
-export function DriverWebRTC(iceConfig, log, sendToServer, hangUpCall) {
+export function AdminWebRTC(iceConfig, log, sendToServer, hangUpCall) {
 
   var pc = null;
   var localVideo = document.getElementById("localVideo");
@@ -106,4 +106,4 @@ export function DriverWebRTC(iceConfig, log, sendToServer, hangUpCall) {
   
 };
 
-export default DriverWebRTC;
+export default AdminWebRTC;
