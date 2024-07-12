@@ -2,6 +2,10 @@ const { createServer } = require("http");
 const express = require("express");
 const WebSocket = require("ws");
 
+let user1Connected = false;
+let user2Connected = false;
+let activeUser = null; // 'admin', 'user1', or 'user2'
+
 // Configure express for serving files
 const app = express();
 app.use(express.json({ extended: false }));
@@ -11,6 +15,12 @@ app.get("/", (request, response) => {
 });
 app.get("/robot", (request, response) => {
   response.sendFile(__dirname + "/public/robot.html");
+});
+app.get("/user1", (request, response) => {
+  response.sendFile(__dirname + "/public/user1.html");
+});
+app.get("/user2", (request, response) => {
+  response.sendFile(__dirname + "/public/user2.html");
 });
 
 // Launch express server

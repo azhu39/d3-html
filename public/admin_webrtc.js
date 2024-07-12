@@ -1,5 +1,3 @@
-// WebRTC
-
 export function AdminWebRTC(iceConfig, log, sendToServer, hangUpCall) {
 
   var pc = null;

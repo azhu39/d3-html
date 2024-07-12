@@ -1,4 +1,3 @@
-// Log
 var logs = document.querySelector("#logs");
 function log(text) {
   console.log(text);
