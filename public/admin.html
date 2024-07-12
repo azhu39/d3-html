@@ -94,6 +94,7 @@
           
         </li>
       </ol>
+      
       <h2 type="button" onclick="toggle('Dashboard')" class="Module-bar">
         Dashboard
       </h2>
@@ -116,6 +117,13 @@
           <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
         </div>
       </div>
+      
+      <div id="userControls">
+        <h3>User Controls</h3>
+        <div>User 1: <span id="user1Status">Disconnected</span> <input type="button" id="toggleUser1" value="Enable"/></div>
+        <div>User 2: <span id="user2Status">Disconnected</span> <input type="button" id="toggleUser2" value="Enable"/></div>
+      </div>
+      
       <hr />
       <div id="logs"></div>
     </main>
@@ -175,6 +183,13 @@
               sendToServer({ type: 'click2Drive', x: getX, y: getY });
             }
       });
+      
+      document.getElementById('toggleUser1').addEventListener('click', () => toggleUserControl('user1'));
+      document.getElementById('toggleUser2').addEventListener('click', () => toggleUserControl('user2'));
+
+      function toggleUserControl(user) {
+        sendToServer({ type: 'toggleControl', user });
+      }
     </script>
   </body>
 </html>

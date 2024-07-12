@@ -39,6 +39,16 @@ function connectWebsocket() {
         case "candidate":
           webrtc.handleCandidate(signal);
           break;
+        case 'userConnected':
+          document.getElementById(`${signal.user}Status`).textContent = 'Connected';
+          break;
+        case 'userDisconnected':
+          document.getElementById(`${signal.user}Status`).textContent = 'Disconnected';
+          document.getElementById(`toggle${signal.user.charAt(0).toUpperCase() + signal.user.slice(1)}`).textContent = 'Enable';
+          break;
+        case 'controlStatus':
+          document.getElementById(`toggle${signal.user.charAt(0).toUpperCase() + signal.user.slice(1)}`).textContent = signal.hasControl ? 'Disable' : 'Enable';
+          break;
       }
     }
   };
