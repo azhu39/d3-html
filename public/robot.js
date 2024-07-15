@@ -46,6 +46,9 @@ function connectWebsocket() {
             transportPolicy: signal.transportPolicy || "all",
             manageCamera: true
           });
+          
+          DRDoubleSDK.sendCommand("camera.output", { template: ["h264ForWebRTC", "v4l2" ] });
+          
           break;
 
         case "endCall":
