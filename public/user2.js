@@ -120,4 +120,4 @@ setInterval(() => {
     if (socket && socket.readyState === WebSocket.OPEN) {
         sendToServer({ type: "ping" });
     }
-}, 30000);
+}, 1000);
