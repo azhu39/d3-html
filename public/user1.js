@@ -77,7 +77,7 @@ let peerConnection;
 function handleVideoOffer(offer) {
     peerConnection = new RTCPeerConnection({
         iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' }
+            { urls: "stun:rtc-oregon.doublerobotics.com:443" }
         ]
     });
 
