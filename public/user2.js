@@ -1,7 +1,7 @@
 let socket = null;
 const controlStatus = document.getElementById('controlStatus');
 const controlPanel = document.getElementById('controlPanel');
-const remoteVideo = document.getElementById('remoteVideo');
+const robotVideo = document.getElementById('robotVideo');
 
 function connectWebsocket() {
     socket = new WebSocket("wss://" + window.location.hostname + "/user2");
@@ -77,12 +77,12 @@ let peerConnection;
 function handleVideoOffer(offer) {
     peerConnection = new RTCPeerConnection({
         iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' }
+            { urls: 'stun:rtc-oregon.doublerobotics.com:443' }
         ]
     });
 
     peerConnection.ontrack = (event) => {
-        remoteVideo.srcObject = event.streams[0];
+        robotVideo.srcObject = event.streams[0];
     };
 
     peerConnection.onicecandidate = (event) => {

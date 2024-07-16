@@ -1,8 +1,7 @@
-import { User1WebRTC } from './user1_webrtc.js';
 let socket = null;
 const controlStatus = document.getElementById('controlStatus');
 const controlPanel = document.getElementById('controlPanel');
-
+const robotVideo = document.getElementById('robotVideo');
 
 function connectWebsocket() {
     socket = new WebSocket("wss://" + window.location.hostname + "/user1");
@@ -31,12 +30,12 @@ function connectWebsocket() {
             case "controlStatus":
                 handleControlStatus(signal);
                 break;
-            // case "offer":
-            //     handleVideoOffer(signal);
-            //     break;
-            // case "candidate":
-            //     handleCandidate(signal);
-            //     break;
+            case "offer":
+                handleVideoOffer(signal);
+                break;
+            case "candidate":
+                handleCandidate(signal);
+                break;
         }
     };
 }
@@ -82,6 +81,46 @@ robotVideoOverlay.addEventListener('click', function(event) {
         window.sendToServer({ type: 'click2Drive', x: getX, y: getY });
 });
 
+// WebRTC code
+let peerConnection;
+
+function handleVideoOffer(offer) {
+    peerConnection = new RTCPeerConnection({
+        iceServers: [
+            { urls: 'stun:rtc-oregon.doublerobotics.com:443' }
+        ]
+    });
+
+    peerConnection.ontrack = (event) => {
+        robotVideo.srcObject = event.streams[0];
+    };
+
+    peerConnection.onicecandidate = (event) => {
+        if (event.candidate) {
+            sendToServer({
+                type: "candidate",
+                candidate: event.candidate
+            });
+        }
+    };
+
+    peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
+        .then(() => peerConnection.createAnswer())
+        .then(answer => peerConnection.setLocalDescription(answer))
+        .then(() => {
+            sendToServer({
+                type: "answer",
+                sdp: peerConnection.localDescription
+            });
+        })
+        .catch(e => console.error(e));
+}
+
+function handleCandidate(message) {
+    let candidate = new RTCIceCandidate(message.candidate);
+    peerConnection.addIceCandidate(candidate)
+        .catch(e => console.error("Error adding received ice candidate", e));
+}
 
 // Start the WebSocket connection
 connectWebsocket();
