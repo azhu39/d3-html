@@ -18,9 +18,28 @@
 <body>
     <h1>User 1 Control Panel</h1>
     <div id="controlStatus">Waiting for control...</div>
-    <div id="robotVideoContainer">   
-        <video id="robotVideo" autoplay muted></video>
-    </div>
+    <div id="streams">
+        
+        <div>
+          <div>
+            <video id="adminVideo" autoplay muted></video>
+          </div>
+          <div id="robotVideoContainer">   
+            <video id="robotVideo" autoplay muted></video>
+            <div id="robotVideoOverlay"></div>
+          </div>
+        </div>
+        
+        <div>
+          <div>
+            <video id="user1Video" autoplay muted></video>
+          </div>
+          <div>
+            <video id="user2Video" autoplay muted></video>
+          </div>
+        </div>
+        
+      </div>
     <br >
     <input type="button" value="Start Call" onclick="startCall()" />
     <input type="button" value="Hang Up" onclick="endCall()" />

@@ -24,6 +24,7 @@
 
     <main>
       <div id="streams">
+        
         <div>
           <div>
             <video id="adminVideo" autoplay muted></video>
@@ -42,6 +43,7 @@
             <video id="user2Video" autoplay muted></video>
           </div>
         </div>
+        
       </div>
       <h2 type="button" onclick="toggle('Pre')" class="Module-bar">
           Pre-operation Check
@@ -103,9 +105,9 @@
         <li>
           Then, please check the webcam and microphone authorization on your computer:
           <input type="button" value="List Webcams" onclick="listWebcams()" />
-          <select id="cameras" onchange="updateLocalVideo()"></select>
-          <select id="mics" onchange="updateLocalVideo()"></select>
-          <input type="button" value="Clear" onclick="endLocalVideo()" />
+          <select id="cameras" onchange="updateAdminVideo()"></select>
+          <select id="mics" onchange="updateAdminVideo()"></select>
+          <input type="button" value="Clear" onclick="endAdminVideo()" />
         </li>
         <li class="optional">
           Optional:
