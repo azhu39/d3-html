@@ -26,11 +26,20 @@
       <div id="streams">
         <div>
           <div>
-            <video id="localVideo" autoplay muted></video>
+            <video id="adminVideo" autoplay muted></video>
           </div>
           <div id="robotVideoContainer">   
-            <video id="remoteVideo" autoplay muted></video>
-            <div id="remoteVideoOverlay"></div>
+            <video id="robotVideo" autoplay muted></video>
+            <div id="robotVideoOverlay"></div>
+          </div>
+        </div>
+        
+        <div>
+          <div>
+            <video id="user1Video" autoplay muted></video>
+          </div>
+          <div>
+            <video id="user2Video" autoplay muted></video>
           </div>
         </div>
       </div>
@@ -126,8 +135,8 @@
       </h2>
       <div id="Dashboard">
         <div>
-          <input type="button" value="Call Robot" onclick="startCall();enableCND();" />
-          <input type="button" value="Hang Up Robot" onclick="endCall();disableCND();" />
+          <input type="button" value="Start Call" onclick="startCall()" />
+          <input type="button" value="Hang Up" onclick="endCall()" />
           <br>
           <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
           <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
@@ -143,79 +152,13 @@
           <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
         </div>
       </div>
-      
       <div id="userControls">
         <h3>User Controls</h3>
         <div>User 1: <span id="user1Status">Disconnected</span> <input type="button" id="toggleUser1" value="Enable"/></div>
         <div>User 2: <span id="user2Status">Disconnected</span> <input type="button" id="toggleUser2" value="Enable"/></div>
       </div>
-      
       <hr />
       <div id="logs"></div>
     </main>
-    <script>
-      function toggle(viewID) {
-                var element = document.getElementById(viewID);
-                if (element.style.display === "none") {
-                    element.style.display = "block";
-                } else {
-                    element.style.display = "none";
-                }
-            }
-      
-      document.addEventListener("DOMContentLoaded", () => {
-      const buttons = document.querySelectorAll(".control-button");
-      let intervalId;
-
-      buttons.forEach(button => {
-          button.addEventListener("mousedown", () => {
-              const getThrottle = parseFloat(button.getAttribute("data-throttle"));
-              const getTurn = parseFloat(button.getAttribute("data-turn"));
-              intervalId = setInterval(() => {
-                  sendToServer({ type: 'navigateDrive', throttle: getThrottle, turn: getTurn });
-              }, 200);
-          });
-
-          button.addEventListener("mouseup", () => {
-              clearInterval(intervalId);
-              sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the button is released
-          });
-
-          button.addEventListener("mouseleave", () => {
-              clearInterval(intervalId);
-              sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the cursor leaves the button
-          });
-        });
-      });
-      
-      var clickAndDriveEnabled = false;
-      function enableCND() {
-        clickAndDriveEnabled = true;
-      }
-      function disableCND() {
-        clickAndDriveEnabled = false;
-      }
-
-      var remoteVideoOverlay = document.getElementById('remoteVideoOverlay');
-
-      remoteVideoOverlay.addEventListener('click', function(event) {
-          var rect = remoteVideoOverlay.getBoundingClientRect();
-          var getX = (event.clientX - rect.left) / rect.width;
-          var getY = (event.clientY - rect.top) / rect.height;
-          if(clickAndDriveEnabled===true)
-            {
-              event.preventDefault(); 
-              console.log(`Click coordinates: x=${getX}, y=${getY}`);
-              sendToServer({ type: 'click2Drive', x: getX, y: getY });
-            }
-      });
-      
-      document.getElementById('toggleUser1').addEventListener('click', () => toggleUserControl('user1'));
-      document.getElementById('toggleUser2').addEventListener('click', () => toggleUserControl('user2'));
-
-      function toggleUserControl(user) {
-        sendToServer({ type: 'toggleControl', user });
-      }
-    </script>
   </body>
 </html>

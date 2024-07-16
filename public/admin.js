@@ -66,12 +66,63 @@ connectWebsocket();
 
 var cameras = document.getElementById("cameras");
 var mics = document.getElementById("mics");
-var localVideo = document.getElementById("localVideo");
+var adminVideo = document.getElementById("adminVideo");
 var urlBox = document.getElementById("urlBox");
 var user1Url = document.getElementById("user1Url");
 var user2Url = document.getElementById("user2Url");
 var robotAvailabilityBox = document.getElementById("robotAvailability");
 var iceConfigTextarea = document.getElementById("iceConfig");
+
+window.toggle = (viewID) => {
+    var element = document.getElementById(viewID);
+    if (element.style.display === "none") {
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+}
+
+document.getElementById('toggleUser1').addEventListener('click', () => toggleUserControl('user1'));
+document.getElementById('toggleUser2').addEventListener('click', () => toggleUserControl('user2'));
+
+function toggleUserControl(user) {
+  window.sendToServer({ type: 'toggleControl', user });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+const buttons = document.querySelectorAll(".control-button");
+let intervalId;
+
+buttons.forEach(button => {
+    button.addEventListener("mousedown", () => {
+        const getThrottle = parseFloat(button.getAttribute("data-throttle"));
+        const getTurn = parseFloat(button.getAttribute("data-turn"));
+        intervalId = setInterval(() => {
+            window.sendToServer({ type: 'navigateDrive', throttle: getThrottle, turn: getTurn });
+        }, 200);
+    });
+
+    button.addEventListener("mouseup", () => {
+        clearInterval(intervalId);
+        window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the button is released
+    });
+
+    button.addEventListener("mouseleave", () => {
+        clearInterval(intervalId);
+        window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the cursor leaves the button
+    });
+  });
+});
+
+var robotVideoOverlay = document.getElementById('robotVideoOverlay');
+robotVideoOverlay.addEventListener('click', function(event) {
+    var rect = robotVideoOverlay.getBoundingClientRect();
+    var getX = (event.clientX - rect.left) / rect.width;
+    var getY = (event.clientY - rect.top) / rect.height;
+        event.preventDefault(); 
+        console.log(`Click coordinates: x=${getX}, y=${getY}`);
+        window.sendToServer({ type: 'click2Drive', x: getX, y: getY });
+});
 
 if (window.location.host == "d3-webrtc-example.glitch.me") {
   urlBox.value = "Do step 1 first!";
@@ -83,7 +134,7 @@ if (window.location.host == "d3-webrtc-example.glitch.me") {
 }
 
 window.listWebcams = () => {
-  window.endLocalVideo();
+  window.endAdminVideo();
   
   navigator.mediaDevices.getUserMedia({audio: true, video: true})
   .then(() => {
@@ -100,7 +151,7 @@ window.listWebcams = () => {
         }
       });
 
-      window.updateLocalVideo();
+      window.updateAdminVideo();
     })
     .catch(function(err) {
       console.log(err.name + ": " + err.message);
@@ -116,27 +167,27 @@ function clearWebcams() {
   mics.innerHTML = "";
 }
 
-function stopLocalVideo() {
-  if (localVideo.srcObject) {
-    localVideo.pause();
-    localVideo.srcObject.getTracks().forEach(track => { track.stop(); });
-    localVideo.srcObject = null;
+function stopAdminVideo() {
+  if (adminVideo.srcObject) {
+    adminVideo.pause();
+    adminVideo.srcObject.getTracks().forEach(track => { track.stop(); });
+    adminVideo.srcObject = null;
   }
 }
 
-window.endLocalVideo = () => {
+window.endAdminVideo = () => {
   clearWebcams();
-  stopLocalVideo();
+  stopAdminVideo();
 }
 
-window.updateLocalVideo = () => {
+window.updateAdminVideo = () => {
   navigator.mediaDevices.getUserMedia({
     audio: { deviceId: mics.value },
     video: { deviceId: cameras.value }
   })
   .then(function (stream) {
-    stopLocalVideo();
-    localVideo.srcObject = stream;
+    stopAdminVideo();
+    adminVideo.srcObject = stream;
   });
 }
 
@@ -165,7 +216,7 @@ window.startCall = () => {
 
 window.endCall = () => {
   webrtc.closeVideoCall();
-  window.endLocalVideo();
+  window.endAdminVideo();
   window.sendToServer({ type: "endCall" });
   webrtc = null;
 };

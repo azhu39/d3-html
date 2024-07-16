@@ -1,9 +1,9 @@
 export function AdminWebRTC(iceConfig, log, sendToServer, hangUpCall) {
 
   var pc = null;
-  var localVideo = document.getElementById("localVideo");
-  var remoteVideo = document.getElementById("remoteVideo");
-  var remoteDriver = document.getElementById("remoteDriver");
+  var adminVideo = document.getElementById("adminVideo");
+  var robotVideo = document.getElementById("robotVideo");
+
   
   this.handleVideoOffer = async (msg) => {
     log("Received call offer");
@@ -18,11 +18,11 @@ export function AdminWebRTC(iceConfig, log, sendToServer, hangUpCall) {
     var desc = new RTCSessionDescription(msg);
     await pc.setRemoteDescription(desc);
 
-    if (!localVideo.srcObject) {
-      localVideo.srcObject = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    if (!adminVideo.srcObject) {
+      adminVideo.srcObject = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     }
 
-    localVideo.srcObject.getTracks().forEach(track => pc.addTrack(track, localVideo.srcObject));
+    adminVideo.srcObject.getTracks().forEach(track => pc.addTrack(track, adminVideo.srcObject));
 
     await pc.setLocalDescription(await pc.createAnswer());
     sendToServer(pc.localDescription);
@@ -50,9 +50,9 @@ export function AdminWebRTC(iceConfig, log, sendToServer, hangUpCall) {
 
       pc.getSenders().forEach(track => { pc.removeTrack(track); });
       
-      if (remoteVideo) {
-        remoteVideo.srcObject = null;
-        remoteVideo.controls = false;
+      if (robotVideo) {
+        robotVideo.srcObject = null;
+        robotVideo.controls = false;
       }
       
       pc.close();
@@ -98,8 +98,8 @@ export function AdminWebRTC(iceConfig, log, sendToServer, hangUpCall) {
 
   this.ontrack = (event) => {
     log("Track event");
-    remoteVideo.srcObject = event.streams[0];
-    remoteVideo.controls = true;
+    robotVideo.srcObject = event.streams[0];
+    robotVideo.controls = true;
   };
   
 };

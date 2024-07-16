@@ -18,14 +18,15 @@
 <body>
     <h1>User 1 Control Panel</h1>
     <div id="controlStatus">Waiting for control...</div>
-    <div id="remoteVideoContainer">   
-        <video id="remoteVideo" autoplay muted></video>
+    <div id="robotVideoContainer">   
+        <video id="robotVideo" autoplay muted></video>
     </div>
+    <br >
+    <input type="button" value="Start Call" onclick="startCall()" />
+    <input type="button" value="Hang Up" onclick="endCall()" />
+    <br >
     <div id="controlPanel">
         <div>
-          <input type="button" value="Call Robot" onclick="startCall();enableCND();" />
-          <input type="button" value="Hang Up Robot" onclick="endCall();disableCND();" />
-          <br>
           <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
           <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
           <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
