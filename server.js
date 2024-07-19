@@ -83,6 +83,7 @@ webSocketServer.on("connection", (socket, req) => {
 //         });
 //       }
 //     }
+    
     switch (signal.type) {
       case "toggleControl":
         if (activeUser === signal.user) {
@@ -99,24 +100,19 @@ webSocketServer.on("connection", (socket, req) => {
         notifyUser('user2', 'send_iframe', { address: signal.address });
         console.info("The iframe src: "+ signal.address);
         break;
-
       case "offer":
-        if (socket.userType === 'admin') {
-          notifyUser(signal.target, 'offer', { sdp: signal.sdp });
-        }
-        break;
-
       case "answer":
-        if (socket.userType === 'user1' || socket.userType === 'user2') {
-          notifyAdmin('answer', { user: socket.userType, sdp: signal.sdp });
-        }
-        break;
-
       case "candidate":
-        if (socket.userType === 'admin') {
-          notifyUser(signal.target, 'candidate', { candidate: signal.candidate });
+        // Handle WebRTC signaling for user connections
+        if (socket.userType === 'admin' && signal.target) {
+          // Admin to user signaling
+          forwardWebRTCSignal(socket, signal, signal.target);
         } else if (socket.userType === 'user1' || socket.userType === 'user2') {
-          notifyAdmin('candidate', { user: socket.userType, candidate: signal.candidate });
+          // User to admin signaling
+          forwardWebRTCSignal(socket, signal, 'admin');
+        } else {
+          // Forward all other signals (including admin-robot) as before
+          forwardToAll(socket, message);
         }
         break;
 
@@ -170,4 +166,28 @@ function notifyUser(userType, type, data) {
       client.send(JSON.stringify({ type, ...data }));
     }
   });
+}
+
+// Function to forward WebRTC signaling messages between admin and users
+function forwardWebRTCSignal(sender, signal, target) {
+  webSocketServer.clients.forEach(client => {
+    if (client !== sender && client.readyState === WebSocket.OPEN) {
+      if (sender.userType === 'admin' && client.userType === target) {
+        client.send(JSON.stringify(signal));
+      } else if ((sender.userType === 'user1' || sender.userType === 'user2') && client.userType === target) {
+        client.send(JSON.stringify({ ...signal, user: sender.userType }));
+      }
+    }
+  });
+}
+
+// Function to forward messages to all clients (preserving original behavior)
+function forwardToAll(sender, message) {
+  if (sender.userType === 'admin' || sender.userType === activeUser || sender.userType === 'robot') {
+    webSocketServer.clients.forEach(client => {
+      if (client !== sender && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
 }
