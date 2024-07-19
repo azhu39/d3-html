@@ -20,7 +20,7 @@ function connectWebsocket() {
     var signal = null;
     try {
       signal = JSON.parse(event.data);
-      log(signal);
+      // log(signal);
     } catch (e) {
       log(event.data);
     }
@@ -93,12 +93,14 @@ function connectWebsocket() {
         
         case "navigateDrive":
           if (signal.hasOwnProperty("throttle") && signal.hasOwnProperty("turn")) {
+            DRDoubleSDK.sendCommand("navigate.enable");
             DRDoubleSDK.sendCommand("navigate.drive", { throttle: signal.throttle, turn: signal.turn });
           }
           break;
         
         case "click2Drive":
           if (signal.hasOwnProperty("x") && signal.hasOwnProperty("y")) {
+            DRDoubleSDK.sendCommand("navigate.enable");
             DRDoubleSDK.sendCommand("camera.hitTest", { x: signal.x, y: signal.y, highlight: true, passToNavigate:true});
           }
           break;
