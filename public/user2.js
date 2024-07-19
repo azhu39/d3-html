@@ -30,6 +30,12 @@ function connectWebsocket() {
             case "controlStatus":
                 handleControlStatus(signal);
                 break;
+            case "send_iframe":
+                console.log('Received send_iframe message:', signal);
+                console.log('Updating iframe source to:', signal.address);
+                const iframe = document.getElementById('contentFrame');
+                iframe.src = signal.address;
+                break;
         }
     };
 }

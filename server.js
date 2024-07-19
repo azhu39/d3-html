@@ -94,11 +94,14 @@ webSocketServer.on("connection", (socket, req) => {
       if (socket.userType === 'user1' || socket.userType === 'user2') {
         notifyAdmin('userDisconnected', { user: socket.userType });
       }
-    webSocketServer.clients.forEach(client => {
-      if (client != socket && client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify({ type: "endCall" }));
+      if (socket.userType === 'admin') {
+        webSocketServer.clients.forEach(client => {
+          if (client != socket && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({ type: "endCall" }));
+          }
+        });
       }
-    });
+      
   });
   
   socket.send("Hello from server");
