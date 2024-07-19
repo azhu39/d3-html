@@ -38,7 +38,7 @@
             <video id="user2Video" autoplay muted></video>
           </div>
         </div>
-        
+        <iframe id="contentFrame" width="960" height="540"></iframe>
       </div>
     <div id="controlPanel">
         <div>
@@ -53,11 +53,11 @@
           <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
         </div>
         <div>
-            <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" />
-            <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" />
-            <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" />
-            <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
-            <input type="button" value="Brake" class="control-button" data-throttle="0" data-turn="0" />
+            <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+            <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+            <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+            <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+            <input type="button" value="Brake" class="control-button" data-throttle="0" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
         </div>
     </div>
     <script src="user2.js"></script>

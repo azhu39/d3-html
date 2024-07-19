@@ -66,7 +66,14 @@ webSocketServer.on("connection", (socket, req) => {
       }
       notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
       notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user });
-    } else {
+    } 
+    else if (signal.type === "send_iframe") {
+      notifyUser('user1', 'send_iframe', { address: signal.address });
+      notifyUser('user2', 'send_iframe', { address: signal.address });
+      console.info("The iframe src: "+ signal.address);
+    
+    }
+    else {
       // Only forward messages from admin or active user to robot
       if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
         webSocketServer.clients.forEach(client => {

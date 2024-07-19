@@ -65,13 +65,15 @@ document.querySelectorAll('.control-button').forEach(button => {
     });
 });
 
-var robotVideoOverlay = document.getElementById('robotVideoOverlay');
+// var robotVideoOverlay = document.getElementById('robotVideoOverlay');
+var robotVideoOverlay = document.getElementById('contentFrame');
 robotVideoOverlay.addEventListener('click', function(event) {
     var rect = robotVideoOverlay.getBoundingClientRect();
     var getX = (event.clientX - rect.left) / rect.width;
     var getY = (event.clientY - rect.top) / rect.height;
         event.preventDefault(); 
         console.log(`Click coordinates: x=${getX}, y=${getY}`);
+        window.sendToServer({ type: 'enableNavigation' });
         window.sendToServer({ type: 'click2Drive', x: getX, y: getY });
 });
 

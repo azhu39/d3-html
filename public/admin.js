@@ -85,6 +85,12 @@ window.toggle = (viewID) => {
 document.getElementById('toggleUser1').addEventListener('click', () => toggleUserControl('user1'));
 document.getElementById('toggleUser2').addEventListener('click', () => toggleUserControl('user2'));
 
+document.getElementById('send_iframe').addEventListener('click', () => {
+ const getAddress = document.getElementById('addressInput').value;
+  window.sendToServer({ type: 'send_iframe', address:getAddress  });
+});
+
+
 function toggleUserControl(user) {
   window.sendToServer({ type: 'toggleControl', user });
 }

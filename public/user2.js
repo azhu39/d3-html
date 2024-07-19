@@ -72,6 +72,7 @@ robotVideoOverlay.addEventListener('click', function(event) {
     var getY = (event.clientY - rect.top) / rect.height;
         event.preventDefault(); 
         console.log(`Click coordinates: x=${getX}, y=${getY}`);
+        window.sendToServer({ type: 'enableNavigation' });
         window.sendToServer({ type: 'click2Drive', x: getX, y: getY });
 });
 

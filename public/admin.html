@@ -90,6 +90,20 @@
             autocapitalize="off"
             spellcheck="false"
           />
+          <br>
+          Robot stream iframe:
+          <input
+            type="text"
+            value=""
+            size="50"
+            id="addressInput"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Enter address"
+          />
+          <input type="button" value="Send iframe to users" id="send_iframe" />
         </li>
 
         <li>
@@ -148,11 +162,11 @@
           <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
         </div>
         <div>
-          <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" />
-          <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" />
-          <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" />
-          <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
-          <input type="button" value="Brake" class="control-button" data-throttle="0" data-turn="0" />
+          <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+          <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+          <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+          <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+          <input type="button" value="Brake" class="control-button" data-throttle="0" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
         </div>
       </div>
       <div id="userControls">
