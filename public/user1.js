@@ -36,6 +36,12 @@ function connectWebsocket() {
                 const iframe = document.getElementById('contentFrame');
                 iframe.src = signal.address;
                 break;
+            case "offer":
+                handleVideoOffer(signal);
+                break;
+            case "candidate":
+                handleCandidate(signal);
+                break;
         }
     };
 }
@@ -92,3 +98,7 @@ setInterval(() => {
         sendToServer({ type: "ping" });
     }
 }, 1000);
+
+
+//WebRTC
+

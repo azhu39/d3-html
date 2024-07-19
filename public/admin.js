@@ -49,6 +49,12 @@ function connectWebsocket() {
         case 'controlStatus':
           document.getElementById(`toggle${signal.user.charAt(0).toUpperCase() + signal.user.slice(1)}`).value = signal.hasControl ? 'Disable' : 'Enable';
           break;
+        case "userOffer":
+          webrtc.handleUserOffer(signal.user, signal.offer);
+          break;
+        case "userCandidate":
+          webrtc.handleUserCandidate(signal.user, signal.candidate);
+          break;
       }
     }
   };

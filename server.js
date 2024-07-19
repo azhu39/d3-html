@@ -58,31 +58,80 @@ webSocketServer.on("connection", (socket, req) => {
   socket.on("message", message => {
     const signal = JSON.parse(message);
 
-    if (signal.type === "toggleControl") {
-      if (activeUser === signal.user) {
-        activeUser = null;
-      } else {
-        activeUser = signal.user;
-      }
-      notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
-      notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user });
-    } 
-    else if (signal.type === "send_iframe") {
-      notifyUser('user1', 'send_iframe', { address: signal.address });
-      notifyUser('user2', 'send_iframe', { address: signal.address });
-      console.info("The iframe src: "+ signal.address);
+//     if (signal.type === "toggleControl") {
+//       if (activeUser === signal.user) {
+//         activeUser = null;
+//       } else {
+//         activeUser = signal.user;
+//       }
+//       notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
+//       notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user });
+//     } 
+//     else if (signal.type === "send_iframe") {
+//       notifyUser('user1', 'send_iframe', { address: signal.address });
+//       notifyUser('user2', 'send_iframe', { address: signal.address });
+//       console.info("The iframe src: "+ signal.address);
     
-    }
-    else {
-      // Only forward messages from admin or active user to robot
-      if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
-        webSocketServer.clients.forEach(client => {
-          if (client != socket && client.readyState === WebSocket.OPEN) {
-            client.send(message);
+//     }
+//     else {
+//       // Only forward messages from admin or active user to robot
+//       if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
+//         webSocketServer.clients.forEach(client => {
+//           if (client != socket && client.readyState === WebSocket.OPEN) {
+//             client.send(message);
+//           }
+//         });
+//       }
+//     }
+    switch (signal.type) {
+      case "toggleControl":
+        if (activeUser === signal.user) {
+            activeUser = null;
+          } else {
+            activeUser = signal.user;
           }
-        });
-      }
+          notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
+          notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user }); 
+        break;
+
+      case "send_iframe":
+        notifyUser('user1', 'send_iframe', { address: signal.address });
+        notifyUser('user2', 'send_iframe', { address: signal.address });
+        console.info("The iframe src: "+ signal.address);
+        break;
+
+      case "offer":
+        if (socket.userType === 'admin') {
+          notifyUser(signal.target, 'offer', { sdp: signal.sdp });
+        }
+        break;
+
+      case "answer":
+        if (socket.userType === 'user1' || socket.userType === 'user2') {
+          notifyAdmin('answer', { user: socket.userType, sdp: signal.sdp });
+        }
+        break;
+
+      case "candidate":
+        if (socket.userType === 'admin') {
+          notifyUser(signal.target, 'candidate', { candidate: signal.candidate });
+        } else if (socket.userType === 'user1' || socket.userType === 'user2') {
+          notifyAdmin('candidate', { user: socket.userType, candidate: signal.candidate });
+        }
+        break;
+
+      default:
+        // Only forward messages from admin or active user to robot
+        if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
+          webSocketServer.clients.forEach(client => {
+            if (client != socket && client.readyState === WebSocket.OPEN) {
+              client.send(message);
+            }
+          });
+        }
+        break;
     }
+    
   });
 
   // End call when any client disconnects
