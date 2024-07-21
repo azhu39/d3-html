@@ -247,3 +247,5 @@ function log(text) {
 window.setInterval(() => {
   window.sendToServer({ ping: 1 });
 }, 1000);
+
+
