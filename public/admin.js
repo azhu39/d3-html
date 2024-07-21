@@ -259,6 +259,7 @@ window.setInterval(() => {
 // document.addEventListener('keyup', handleKeyUp);
 
 // function handleKeyDown(event) {
+//     event.preventDefault();
 //     if (keyIntervals[event.key]) return; // Prevent repeated calls while key is held down
 
 //     let throttle = 0;
@@ -288,6 +289,7 @@ window.setInterval(() => {
 // }
 
 // function handleKeyUp(event) {
+//     event.preventDefault();
 //     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
 //         // Stop the interval for this key
 //         clearInterval(keyIntervals[event.key]);
