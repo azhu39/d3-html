@@ -45,19 +45,19 @@
           <input type="button" value="Join Call" onclick="startCall();enableCND();" />
           <input type="button" value="Hang Up" onclick="endCall();disableCND();" />
           <br>
-          <input type="button" value="Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
-          <input type="button" value="Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
-          <input type="button" value="Stop" onclick="javascript:sendToServer({ type: 'poleStop' })" />
-          <input type="button" value="Enable Navigation" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
+          <input type="button" value="Neck Stand" onclick="javascript:sendToServer({ type: 'poleStand' })" />
+          <input type="button" value="Neck Sit" onclick="javascript:sendToServer({ type: 'poleSit' })" />
+          <input type="button" value="Neck Hold" onclick="javascript:sendToServer({ type: 'poleStop' })" />
+          <input type="button" value="Start/Restart" onclick="javascript:sendToServer({ type: 'enableNavigation' })" />
           <input type="button" value="Deploy Kickstand" onclick="javascript:sendToServer({ type: 'deployKickstand' })" />
           <input type="button" value="Retract Kickstand" onclick="javascript:sendToServer({ type: 'retractKickstand' })" />
         </div>
         <div>
-            <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
-            <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
-            <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
-            <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
-            <input type="button" value="Brake" class="control-button" data-throttle="0" data-turn="0" onclick="javascript:sendToServer({ type: 'enableNavigation' })"/>
+            <input type="button" value="⬅" class="control-button" data-throttle="0" data-turn="-0.5" />
+            <input type="button" value="⬆" class="control-button" data-throttle="1" data-turn="0" />
+            <input type="button" value="⬇" class="control-button" data-throttle="-1" data-turn="0" />
+            <input type="button" value="➡" class="control-button" data-throttle="0" data-turn="0.5" />
+            <input type="button" value="Brake" class="control-button" data-throttle="0" data-turn="0" />
         </div>
     </div>
     <script src="user2.js"></script>

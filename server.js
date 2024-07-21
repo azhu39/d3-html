@@ -52,82 +52,82 @@ webSocketServer.on("connection", (socket, req) => {
   
   if (userType === 'user1' || userType === 'user2') {
     notifyAdmin('userConnected', { user: userType });
-    // forwardToAll();
+    forwardToAll(socket,JSON.stringify({ type: "enableNavigation" }));
   }
   
   // Send all messages to all other clients
   socket.on("message", message => {
     const signal = JSON.parse(message);
 
-    if (signal.type === "toggleControl") {
-      if (activeUser === signal.user) {
-        activeUser = null;
-      } else {
-        activeUser = signal.user;
-      }
-      notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
-      notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user });
-    } 
-    else if (signal.type === "send_iframe") {
-      notifyUser('user1', 'send_iframe', { address: signal.address });
-      notifyUser('user2', 'send_iframe', { address: signal.address });
-      console.info("The iframe src: "+ signal.address);
+//     if (signal.type === "toggleControl") {
+//       if (activeUser === signal.user) {
+//         activeUser = null;
+//       } else {
+//         activeUser = signal.user;
+//       }
+//       notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
+//       notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user });
+//     } 
+//     else if (signal.type === "send_iframe") {
+//       notifyUser('user1', 'send_iframe', { address: signal.address });
+//       notifyUser('user2', 'send_iframe', { address: signal.address });
+//       console.info("The iframe src: "+ signal.address);
     
-    }
-    else {
-      // Only forward messages from admin or active user to robot
-      if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
-        webSocketServer.clients.forEach(client => {
-          if (client != socket && client.readyState === WebSocket.OPEN) {
-            client.send(message);
-          }
-        });
-      }
-    }
-    
-//     switch (signal.type) {
-//       case "toggleControl":
-//         if (activeUser === signal.user) {
-//             activeUser = null;
-//           } else {
-//             activeUser = signal.user;
-//           }
-//           notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
-//           notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user }); 
-//         break;
-
-//       case "send_iframe":
-//         notifyUser('user1', 'send_iframe', { address: signal.address });
-//         notifyUser('user2', 'send_iframe', { address: signal.address });
-//         console.info("The iframe src: "+ signal.address);
-//         break;
-//       case "offer":
-//       case "answer":
-//       case "candidate":
-//         // Handle WebRTC signaling for user connections
-//         if (socket.userType === 'admin' && signal.target) {
-//           // Admin to user signaling
-//           forwardWebRTCSignal(socket, signal, signal.target);
-//         } else if (socket.userType === 'user1' || socket.userType === 'user2') {
-//           // User to admin signaling
-//           forwardWebRTCSignal(socket, signal, 'admin');
-//         } else {
-//           // Forward all other signals (including admin-robot) as before
-//           forwardToAll(socket, message);
-//         }
-//         break;
-
-//       default:
-//         // Only forward messages from admin or active user to robot
-//         if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
-//           webSocketServer.clients.forEach(client => {
-//             if (client != socket && client.readyState === WebSocket.OPEN) {
-//               client.send(message);
-//             }
-//           });
-//         }
-//         break;
 //     }
+//     else {
+//       // Only forward messages from admin or active user to robot
+//       if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
+//         webSocketServer.clients.forEach(client => {
+//           if (client != socket && client.readyState === WebSocket.OPEN) {
+//             client.send(message);
+//           }
+//         });
+//       }
+//     }
+    
+    switch (signal.type) {
+      case "toggleControl":
+        if (activeUser === signal.user) {
+            activeUser = null;
+          } else {
+            activeUser = signal.user;
+          }
+          notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
+          notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user }); 
+        break;
+
+      case "send_iframe":
+        notifyUser('user1', 'send_iframe', { address: signal.address });
+        notifyUser('user2', 'send_iframe', { address: signal.address });
+        console.info("The iframe src: "+ signal.address);
+        break;
+      case "offer":
+      case "answer":
+      case "candidate":
+        // Handle WebRTC signaling for user connections
+        if (socket.userType === 'admin' && signal.target) {
+          // Admin to user signaling
+          forwardWebRTCSignal(socket, signal, signal.target);
+        } else if (socket.userType === 'user1' || socket.userType === 'user2') {
+          // User to admin signaling
+          forwardWebRTCSignal(socket, signal, 'admin');
+        } else {
+          // Forward all other signals (including admin-robot) as before
+          forwardToAll(socket, message);
+        }
+        break;
+
+      default:
+        // Only forward messages from admin or active user to robot
+        if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
+          webSocketServer.clients.forEach(client => {
+            if (client != socket && client.readyState === WebSocket.OPEN) {
+              client.send(message);
+            }
+          });
+        }
+        break;
+    }
     
   });
 
