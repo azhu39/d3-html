@@ -184,11 +184,11 @@ function forwardWebRTCSignal(sender, signal, target) {
 
 // Function to forward messages to all clients (preserving original behavior)
 function forwardToAll(sender, message) {
-  if (sender.userType === 'admin' || sender.userType === activeUser || sender.userType === 'robot') {
+  // if (sender.userType === 'admin' || sender.userType === activeUser || sender.userType === 'robot') {
     webSocketServer.clients.forEach(client => {
       if (client !== sender && client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
     });
-  }
+  // }
 }
