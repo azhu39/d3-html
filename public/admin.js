@@ -101,8 +101,8 @@ function toggleUserControl(user) {
   window.sendToServer({ type: 'toggleControl', user });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-const buttons = document.querySelectorAll(".control-button");
+// document.addEventListener("DOMContentLoaded", () => {
+// const buttons = document.querySelectorAll(".control-button");
 
 // let intervalId;
 // buttons.forEach(button => {
@@ -123,83 +123,9 @@ const buttons = document.querySelectorAll(".control-button");
 //         clearInterval(intervalId);
 //         window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 }); // Stop the robot when the cursor leaves the button
 //     });
-//   });
-// });
+//   }); 
   
-let intervalId = null;
-const keyIntervals = {};
-
-document.addEventListener('keydown', handleKeyDown);
-document.addEventListener('keyup', handleKeyUp);
-
-function handleKeyDown(event) {
-    if (keyIntervals[event.key]) return; // Prevent repeated calls while key is held down
-
-    let throttle = 0;
-    let turn = 0;
-
-    switch (event.key) {
-        case 'ArrowUp':
-            throttle = 0.5; // Adjust this value as needed
-            break;
-        case 'ArrowDown':
-            throttle = -0.5; // Adjust this value as needed
-            break;
-        case 'ArrowLeft':
-            turn = -0.5; // Adjust this value as needed
-            break;
-        case 'ArrowRight':
-            turn = 0.5; // Adjust this value as needed
-            break;
-        default:
-            return; // Exit for other keys
-    }
-
-    // Start continuous driving
-    keyIntervals[event.key] = setInterval(() => {
-        window.sendToServer({ type: 'navigateDrive', throttle, turn });
-    }, 200); // Match the interval used for button controls
-}
-
-function handleKeyUp(event) {
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-        // Stop the interval for this key
-        clearInterval(keyIntervals[event.key]);
-        delete keyIntervals[event.key];
-
-        // Stop the robot
-        window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 });
-    }
-}
-
-// Modify the existing button event listeners to use the same interval approach
-document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".control-button");
-
-    buttons.forEach(button => {
-        button.addEventListener("mousedown", () => {
-            const getThrottle = parseFloat(button.getAttribute("data-throttle"));
-            const getTurn = parseFloat(button.getAttribute("data-turn"));
-            intervalId = setInterval(() => {
-                window.sendToServer({ type: 'navigateDrive', throttle: getThrottle, turn: getTurn });
-            }, 200);
-        });
-
-        button.addEventListener("mouseup", stopDriving);
-        button.addEventListener("mouseleave", stopDriving);
-    });
-});
-
-function stopDriving() {
-    clearInterval(intervalId);
-    window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 });
-}
-
-// Add this to handle page unload
-window.addEventListener('beforeunload', () => {
-    Object.values(keyIntervals).forEach(clearInterval);
-    stopDriving();
-});
+// });
 
 
 
@@ -326,4 +252,77 @@ window.setInterval(() => {
   window.sendToServer({ ping: 1 });
 }, 1000);
 
+let intervalId = null;
+const keyIntervals = {};
 
+document.addEventListener('keydown', handleKeyDown);
+document.addEventListener('keyup', handleKeyUp);
+
+function handleKeyDown(event) {
+    if (keyIntervals[event.key]) return; // Prevent repeated calls while key is held down
+
+    let throttle = 0;
+    let turn = 0;
+
+    switch (event.key) {
+        case 'ArrowUp':
+            throttle = 0.5; // Adjust this value as needed
+            break;
+        case 'ArrowDown':
+            throttle = -0.5; // Adjust this value as needed
+            break;
+        case 'ArrowLeft':
+            turn = -0.5; // Adjust this value as needed
+            break;
+        case 'ArrowRight':
+            turn = 0.5; // Adjust this value as needed
+            break;
+        default:
+            return; // Exit for other keys
+    }
+
+    // Start continuous driving
+    keyIntervals[event.key] = setInterval(() => {
+        window.sendToServer({ type: 'navigateDrive', throttle, turn });
+    }, 200); // Match the interval used for button controls
+}
+
+function handleKeyUp(event) {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        // Stop the interval for this key
+        clearInterval(keyIntervals[event.key]);
+        delete keyIntervals[event.key];
+
+        // Stop the robot
+        window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 });
+    }
+}
+
+// Modify the existing button event listeners to use the same interval approach
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".control-button");
+
+    buttons.forEach(button => {
+        button.addEventListener("mousedown", () => {
+            const getThrottle = parseFloat(button.getAttribute("data-throttle"));
+            const getTurn = parseFloat(button.getAttribute("data-turn"));
+            intervalId = setInterval(() => {
+                window.sendToServer({ type: 'navigateDrive', throttle: getThrottle, turn: getTurn });
+            }, 200);
+        });
+
+        button.addEventListener("mouseup", stopDriving);
+        button.addEventListener("mouseleave", stopDriving);
+    });
+});
+
+function stopDriving() {
+    clearInterval(intervalId);
+    window.sendToServer({ type: 'navigate', throttle: 0, turn: 0 });
+}
+
+// Add this to handle page unload
+window.addEventListener('beforeunload', () => {
+    Object.values(keyIntervals).forEach(clearInterval);
+    stopDriving();
+});
