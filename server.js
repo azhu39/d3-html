@@ -52,6 +52,7 @@ webSocketServer.on("connection", (socket, req) => {
   
   if (userType === 'user1' || userType === 'user2') {
     notifyAdmin('userConnected', { user: userType });
+    // forwardToAll();
   }
   
   // Send all messages to all other clients
@@ -75,13 +76,13 @@ webSocketServer.on("connection", (socket, req) => {
     }
     else {
       // Only forward messages from admin or active user to robot
-      // if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
+      if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
         webSocketServer.clients.forEach(client => {
           if (client != socket && client.readyState === WebSocket.OPEN) {
             client.send(message);
           }
         });
-      // }
+      }
     }
     
 //     switch (signal.type) {
