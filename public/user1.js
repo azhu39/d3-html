@@ -57,7 +57,7 @@ function sendToServer(message) {
 // Set up control buttons
 document.querySelectorAll('.control-button').forEach(button => {
     button.addEventListener('click',()=>{
-      
+      sendToServer({type:'requestLock', user:'user1'})
     });  
   
     button.addEventListener('mousedown', () => {

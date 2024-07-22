@@ -98,7 +98,7 @@ document.getElementById('send_iframe').addEventListener('click', () => {
 
 
 function toggleUserControl(user) {
-  window.sendToServer({ type: 'toggleControl', user });
+  window.sendToServer({ type: 'toggleControlPanelAccess', user });
 }
 
 document.addEventListener("DOMContentLoaded", () => {

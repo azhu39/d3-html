@@ -5,6 +5,7 @@ const WebSocket = require("ws");
 let user1Connected = false;
 let user2Connected = false;
 let activeUser = null; // 'admin', 'user1', or 'user2'
+let lockHolder = null; //  'user1', or 'user2'
 
 // Configure express for serving files
 const app = express();
@@ -86,7 +87,7 @@ webSocketServer.on("connection", (socket, req) => {
 //     }
     
     switch (signal.type) {
-      case "toggleControl":
+      case "toggleControlPanelAccess":
         if (activeUser === signal.user) {
             activeUser = null;
           } else {
@@ -114,6 +115,17 @@ webSocketServer.on("connection", (socket, req) => {
         } else {
           // Forward all other signals (including admin-robot) as before
           forwardToAll(socket, message);
+        }
+        break;
+      case "requestLock":
+        if(lockHolder === null)
+          {
+            lockHolder = socket.userType
+          }
+        break;
+      case "releaseLock":
+        if(socket.userType === lockHolder){
+          lockHolder = null;
         }
         break;
 
