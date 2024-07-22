@@ -55,20 +55,25 @@ function sendToServer(message) {
 }
 
 // Set up control buttons
+let intervalId;
 document.querySelectorAll('.control-button').forEach(button => {
     button.addEventListener('mousedown', () => {
         const throttle = parseFloat(button.getAttribute('data-throttle'));
         const turn = parseFloat(button.getAttribute('data-turn'));
         sendToServer({type:'requestLock', user:'user2'});
-        sendToServer({ type: 'navigateDrive', throttle: throttle, turn: turn });
+        intervalId = setInterval(() => {
+            window.sendToServer({ type: 'navigateDrive', throttle: throttle, turn: turn });
+        }, 200);
     });
 
     button.addEventListener('mouseup', () => {
+        clearInterval(intervalId);
         sendToServer({ type: 'navigateDrive', throttle: 0, turn: 0 });
         sendToServer({type:'releaseLock', user:'user2'});
     });
 
     button.addEventListener('mouseleave', () => {
+        clearInterval(intervalId);
         sendToServer({ type: 'navigateDrive', throttle: 0, turn: 0 });
         sendToServer({type:'releaseLock', user:'user2'});
     });
