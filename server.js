@@ -132,11 +132,12 @@ webSocketServer.on("connection", (socket, req) => {
         if(lockHolder === null)
           {
             lockHolder = socket.userType
-            console.info("Now")
+            console.info("Now the lock holder is " + lockHolder);
           }
         break;
       case "releaseLock":
         if(socket.userType === lockHolder){
+          console.info(lockHolder + " now has released the lock");
           lockHolder = null;
         }
         break;
