@@ -4,7 +4,9 @@ const WebSocket = require("ws");
 
 let user1Connected = false;
 let user2Connected = false;
-let activeUser = null; // 'admin', 'user1', or 'user2'
+let user1HasAccess = false;
+let user2HasAccess = false;
+// let activeUser = null; // 'admin', 'user1', or 'user2'
 let lockHolder = null; //  'user1', or 'user2'
 
 // Configure express for serving files
@@ -88,14 +90,22 @@ webSocketServer.on("connection", (socket, req) => {
     
     switch (signal.type) {
       case "toggleControlPanelAccess":
-        if (activeUser === signal.user) {
-            activeUser = null;
-          } else {
-            activeUser = signal.user;
+        // if (activeUser === signal.user) {
+        //     activeUser = null;
+        //   } else {
+        //     activeUser = signal.user;
+        //   }
+        //   console.info("The current active user is "+activeUser);
+        if(signal.user === 'user1')
+          {
+            notifyAdmin('controlStatus', { user: signal.user, hasControl: !user1HasAccess });
+            notifyUser(signal.user, 'controlStatus', { hasControl: !user1HasAccess }); 
           }
-          console.info("The current active user is "+activeUser);
-          notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
-          notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user }); 
+        if(signal.user === 'user2')
+          {
+            notifyAdmin('controlStatus', { user: signal.user, hasControl: !user2HasAccess });
+            notifyUser(signal.user, 'controlStatus', { hasControl: !user2HasAccess }); 
+          }         
         break;
 
       case "send_iframe":
@@ -132,13 +142,13 @@ webSocketServer.on("connection", (socket, req) => {
 
       default:
         // Only forward messages from admin or active user to robot
-        if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
+        // if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
           webSocketServer.clients.forEach(client => {
             if (client != socket && client.readyState === WebSocket.OPEN) {
               client.send(message);
             }
           });
-        }
+        // }
         break;
     }
     
@@ -146,9 +156,15 @@ webSocketServer.on("connection", (socket, req) => {
 
   // End call when any client disconnects
   socket.on("close", () => {
-      if (socket.userType === 'user1') user1Connected = false;
-      if (socket.userType === 'user2') user2Connected = false;
-      if (activeUser === socket.userType) activeUser = null;
+      if (socket.userType === 'user1'){
+        user1Connected = false;
+        user1HasAccess = false;
+      } 
+      if (socket.userType === 'user2'){
+        user2Connected = false;
+        user2HasAccess = false;
+      } 
+      // if (activeUser === socket.userType) activeUser = null;
 
       if (socket.userType === 'user1' || socket.userType === 'user2') {
         notifyAdmin('userDisconnected', { user: socket.userType });
