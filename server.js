@@ -132,6 +132,7 @@ webSocketServer.on("connection", (socket, req) => {
         if(lockHolder === null)
           {
             lockHolder = socket.userType
+            console.info("Now")
           }
         break;
       case "releaseLock":
@@ -140,19 +141,25 @@ webSocketServer.on("connection", (socket, req) => {
         }
         break;
       case "navigateDrive":
-        if(socket.userType === lockHolder && lockHolder !== null)
+        if((socket.userType === lockHolder && lockHolder !== null)|| socket.userType === 'admin') {
+          forwardToAll(socket, message);
+        }
         break;
       case "click2Drive":
+        if((socket.userType === lockHolder && lockHolder !== null)|| socket.userType === 'admin') {
+          forwardToAll(socket, message);
+        }
         break;
       default:
         // Only forward messages from admin or active user to robot
         // if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
-          webSocketServer.clients.forEach(client => {
-            if (client != socket && client.readyState === WebSocket.OPEN) {
-              client.send(message);
-            }
-          });
+          // webSocketServer.clients.forEach(client => {
+          //   if (client != socket && client.readyState === WebSocket.OPEN) {
+          //     client.send(message);
+          //   }
+          // });
         // }
+        forwardToAll(socket, message);
         break;
     }
     
