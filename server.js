@@ -139,7 +139,11 @@ webSocketServer.on("connection", (socket, req) => {
           lockHolder = null;
         }
         break;
-
+      case "navigateDrive":
+        if(socket.userType === lockHolder && lockHolder !== null)
+        break;
+      case "click2Drive":
+        break;
       default:
         // Only forward messages from admin or active user to robot
         // if (socket.userType === 'admin' || socket.userType === activeUser || socket.userType === 'robot') {
@@ -166,9 +170,9 @@ webSocketServer.on("connection", (socket, req) => {
       } 
       // if (activeUser === socket.userType) activeUser = null;
 
-      if (socket.userType === 'user1' || socket.userType === 'user2') {
+      // if (socket.userType === 'user1' || socket.userType === 'user2') {
         notifyAdmin('userDisconnected', { user: socket.userType });
-      }
+      // }
       if (socket.userType === 'admin') {
         webSocketServer.clients.forEach(client => {
           if (client != socket && client.readyState === WebSocket.OPEN) {
@@ -213,11 +217,11 @@ function forwardWebRTCSignal(sender, signal, target) {
 
 // Function to forward messages to all clients (preserving original behavior)
 function forwardToAll(sender, message) {
-  if (sender.userType === 'admin' || (sender.userType === lockHolder && lockHolder !== null ) || sender.userType === 'robot') {
+  // if (sender.userType === 'admin' || (sender.userType === lockHolder && lockHolder !== null ) || sender.userType === 'robot') {
     webSocketServer.clients.forEach(client => {
       if (client !== sender && client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
     });
-  }
+  // }
 }

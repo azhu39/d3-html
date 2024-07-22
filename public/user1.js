@@ -57,12 +57,13 @@ function sendToServer(message) {
 // Set up control buttons
 document.querySelectorAll('.control-button').forEach(button => {
     button.addEventListener('click',()=>{
-      sendToServer({type:'requestLock', user:'user1'})
+      sendToServer({type:'requestLock', user:'user1'});
     });  
   
     button.addEventListener('mousedown', () => {
         const throttle = parseFloat(button.getAttribute('data-throttle'));
         const turn = parseFloat(button.getAttribute('data-turn'));
+        sendToServer({type:'requestLock', user:'user1'});
         sendToServer({ type: 'navigateDrive', throttle: throttle, turn: turn });
     });
 
