@@ -56,6 +56,10 @@ function sendToServer(message) {
 
 // Set up control buttons
 document.querySelectorAll('.control-button').forEach(button => {
+    button.addEventListener('click',()=>{
+      
+    });  
+  
     button.addEventListener('mousedown', () => {
         const throttle = parseFloat(button.getAttribute('data-throttle'));
         const turn = parseFloat(button.getAttribute('data-turn'));
@@ -64,10 +68,12 @@ document.querySelectorAll('.control-button').forEach(button => {
 
     button.addEventListener('mouseup', () => {
         sendToServer({ type: 'navigateDrive', throttle: 0, turn: 0 });
+        sendToServer({type:'releaseLock', user:'user1'});
     });
 
     button.addEventListener('mouseleave', () => {
         sendToServer({ type: 'navigateDrive', throttle: 0, turn: 0 });
+        sendToServer({type:'releaseLock', user:'user1'});
     });
 });
 
