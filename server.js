@@ -93,6 +93,7 @@ webSocketServer.on("connection", (socket, req) => {
           } else {
             activeUser = signal.user;
           }
+          console.info("The current active user is "+activeUser);
           notifyAdmin('controlStatus', { user: signal.user, hasControl: activeUser === signal.user });
           notifyUser(signal.user, 'controlStatus', { hasControl: activeUser === signal.user }); 
         break;
